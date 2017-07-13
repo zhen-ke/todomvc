@@ -33,7 +33,6 @@ todoapp.addEventListener('keyup', function(e) {
     } else {
       labelValue.innerHTML = editLi.querySelector('.edit').value;
       editLi.classList.remove('editing')
-      editLi.querySelector('.edit').value = ""
     }
   }
 })
@@ -136,13 +135,15 @@ todoapp.addEventListener('dblclick', function(e) {
     editLi.querySelector('.edit').focus();
     textTemp = ""
   }
-})
-
-addEventListener('click', function(e) {
   if (editLi) {
-    if (editLi.classList.contains('editing')) {
-      editLi.classList.remove('editing')
-    }
+    editLi.querySelector('.edit').addEventListener('blur', function(e) {
+      if (!editLi.querySelector('.edit').value.trim()) {
+        editLi.classList.remove('editing')
+      } else {
+        labelValue.innerHTML = editLi.querySelector('.edit').value;
+        editLi.classList.remove('editing')
+      }
+    })
   }
 })
 
