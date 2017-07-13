@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vanilla • TodoMVC</title>
+  <link rel="stylesheet" href="css/todoapp.css">
+</head>
+
+<body>
+  <div class="todomvc-wrapper">
+    <section class="todoapp">
+      <header class="header">
+        <h1>todos</h1>
+        <input type="text" class="new-todo" placeholder="What needs to be done?">
+      </header>
+      <section class="main">
+        <input type="checkbox" class="toggle-all" name="toggle-all">
+        <label for="toggle-all">Mark all as complete</label>
+        <ul class="todo-list">
+        </ul>
+      </section>
+      <footer class="footer">
+        <span class="todo-count">
+          item left
+        </span>
+        <ul>
+          <li class="selected">
+            <a href="#" class="show-all">All</a>
+          </li>
+          <li>
+            <a href="#" class="show-active">Active</a>
+          </li>
+          <li>
+            <a href="#" class="show-completed">Completed</a>
+          </li>
+        </ul>
+        <button class="clear-completed">Clear completed </button>
+      </footer>
+    </section>
+  </div>
+  <footer class="ft">
+    <p>Double-click to edit a todo</p>
+    <p>Written by XMit</p>
+    <p>Part of TodoMVC</p>
+  </footer>
+</body>
+<script type="text/javascript" src="js/todoapp.js"></script>
+
+</html>
