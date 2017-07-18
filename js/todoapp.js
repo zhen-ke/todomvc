@@ -2,6 +2,7 @@ let todoapp = document.querySelector('.todoapp')
 let clearCompleted = todoapp.querySelector('.clear-completed');
 let todoCount = todoapp.querySelector('.todo-count');
 let labelValue, editLi
+let todoLocalStorage = []
 
 // 内容输入创建节点
 todoapp.addEventListener('keyup', function(e) {
@@ -35,12 +36,14 @@ todoapp.addEventListener('keyup', function(e) {
       editLi.classList.remove('editing')
     }
   }
+  addStorage()
 })
 
 // 用事件代理来处理所有事件
 todoapp.addEventListener('click', function(e) {
   let toggleAll = todoapp.querySelector('.toggle-all');
   let toggleInput = todoapp.querySelectorAll('.toggle');
+
   // 单个完成与取消
   if (e.target.className === 'toggle') {
     if (Array.from(toggleInput).every(it => it.checked)) {
@@ -121,9 +124,11 @@ todoapp.addEventListener('click', function(e) {
     })
   }
   checkCompleted();
-  checkActive()
+  checkActive();
+  addStorage()
 })
 
+// 双击编辑内容
 todoapp.addEventListener('dblclick', function(e) {
   let textTemp = ''
   editLi = e.target.parentElement.parentElement
@@ -143,10 +148,10 @@ todoapp.addEventListener('dblclick', function(e) {
         labelValue.innerHTML = editLi.querySelector('.edit').value;
         editLi.classList.remove('editing')
       }
+      addStorage()
     })
   }
 })
-
 
 // 检查完成
 function checkCompleted() {
@@ -169,4 +174,62 @@ function checkActive() {
   } else {
     todoFooter.style.display = 'block'
   }
+}
+
+// 在存储中设置值
+function addStorage() {
+  let docLi = todoapp.querySelector('.todo-list').querySelectorAll('li')
+  let statusLi = Array.from(todoapp.querySelector('.footer').querySelectorAll('li'))
+  let obj
+  docLi.forEach(a => {
+    obj = {}
+    let docLiValue = a.querySelector('label').innerHTML
+    let docLiCompleted = a.className;
+    obj.title = docLiValue
+    obj.completed = docLiCompleted === 'active' ? 'active' : 'completed'
+    todoLocalStorage.push(obj)
+  })
+  localStorage.mytodoapp = JSON.stringify(todoLocalStorage)
+  todoLocalStorage = []
+}
+
+// 加载数据并生成节点
+function setNode() {
+  if (localStorage.mytodoapp) {
+    let todoappDate = JSON.parse(localStorage.mytodoapp)
+    let todoList = todoapp.querySelector('.todo-list')
+    let li
+    let templates = ""
+    for (let key of todoappDate) {
+      templates += li = `
+              <li class="${key.completed}">
+                <div class="view">
+                  <input class="toggle" type="checkbox">
+                  <label>${key.title}</label>
+                  <button class="destroy"></button>
+                </div>
+                <input class="edit" name="title">
+              </li>
+            `
+    }
+    todoList.innerHTML = templates
+    let createLi = Array.from(todoList.querySelectorAll('li'))
+    for (let key of createLi) {
+      if (key.className === 'completed') {
+        key.querySelector('.toggle').checked = true
+      }
+    }
+  }
+}
+
+// 页面在关闭时保存用户数据
+window.onbeforeunload = function() {
+  //addStorage()
+}
+
+// 页面在刷新时加载用户数据
+window.onload = function() {
+  setNode()
+  checkActive()
+  checkCompleted()
 }
