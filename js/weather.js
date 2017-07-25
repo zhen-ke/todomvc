@@ -2676,6 +2676,7 @@ function onSuccess(position) {
     let longitudeTemp = parseInt(data[key].split(",")[1])
     if (latitudeTemp === latitude && longitudeTemp === longitude) {
       jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[key] + '?units=si&lang=zh' + '&callback=callback')
+      userLocation = key
       break;
     }
   }
