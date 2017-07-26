@@ -28,7 +28,7 @@ function jsonp(url) {
   return new Promise(function(resolve, reject) {
     var script = document.createElement('script');
     script.setAttribute('src', url);
-    document.head.appendChild(script);
+    document.body.appendChild(script);
     script.onload = function() {
       resolve()
     }
