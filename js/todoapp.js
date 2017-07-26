@@ -229,7 +229,26 @@ window.onbeforeunload = function() {
 
 // 页面在刷新时加载用户数据
 window.onload = function() {
-  setNode()
   checkActive()
   checkCompleted()
+  console.log('todo')
 }
+
+var whenReady = function() {
+  var runned = false
+  var fns = []
+  document.addEventListener('DOMContentLoaded', function() { //debugger
+    fns.forEach(fn => {
+      fn()
+    })
+    runned = true
+  })
+  return function whenReady(fn) {
+    if (runned) { //false
+      fn()
+    }
+    fns.push(fn)
+  }
+}()
+
+whenReady(setNode)

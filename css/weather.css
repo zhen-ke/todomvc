@@ -1,0 +1,88 @@
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin: 0;
+}
+
+.weather {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  display: none;
+}
+
+.result .icon {
+  margin: 0 5px;
+}
+
+.weather:hover .wrap {
+  display: block;
+}
+
+.wrap {
+  border: 1px solid #D1DFE9;
+  background-color: #fff;
+  width: 360px;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  z-index: 1;
+  display: none;
+}
+
+.wrap .head {
+  padding: 10px 15px;
+}
+
+.wrap .head p {
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.wrap .head p:first-child {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.wrap .head .summary {}
+
+.moreDaysWeather {
+  overflow: hidden;
+}
+
+.moreDaysWeather li {
+  float: left;
+  border-top: 1px solid #D1DFE9;
+  border-left: 1px solid #D1DFE9;
+  margin-left: -1px;
+  padding: 10px 30px 5px;
+  text-align: center;
+}
+
+.moreDaysWeather li .icon {
+  font-size: 30px;
+}
+
+.moreDaysWeather li p {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.moreDaysWeather p.temperature {
+  width: 60px;
+}
+
+.moreDaysWeather li p span.max,
+.moreDaysWeather li p span.min {
+  margin: 0 5px;
+}
+
+.moreDaysWeather li p span.max {
+  font-weight: bold;
+}
