@@ -61,7 +61,7 @@ function debounce(fn, duration) {
 
 // 异步获取用户ip，如果获取失败使用 html5 的方式获取
 // setTimeout(function() {
-//jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
+//   jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
 // }, 0)
 
 jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
