@@ -229,7 +229,6 @@ window.onbeforeunload = function() {
 
 // 页面在刷新时加载用户数据
 window.onload = function() {
-  checkActive()
   checkCompleted()
   console.log('todo')
 }
@@ -252,3 +251,4 @@ var whenReady = function() {
 }()
 
 whenReady(setNode)
+whenReady(checkActive)

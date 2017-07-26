@@ -42,10 +42,10 @@ function callback(data) {
   let resultspan = document.querySelector('.result').querySelectorAll('span')
   resultspan[0].innerHTML = userLocation
   resultspan[1].innerHTML = iconMap[(data.currently.icon).split('-').join("")]
-  resultspan[2].innerHTML = parseInt(data.currently.temperature) + "℃"
+  resultspan[2].innerHTML = Math.ceil(data.currently.temperature) + "℃"
   moreDays(data)
   let headp = document.querySelector('.head').querySelectorAll('p')
-  headp[0].innerHTML = userLocation + " " + parseInt(data.currently.temperature) + "℃"
+  headp[0].innerHTML = userLocation + " " + Math.ceil(data.currently.temperature) + "℃"
   headp[1].innerHTML = data.hourly.summary
 }
 
@@ -139,8 +139,8 @@ function moreDays(str) {
     let max = moreDaysWeather[key].querySelector('.max');
     let min = moreDaysWeather[key].querySelector('.min');
     let icon = moreDaysWeather[key].querySelector('.icon');
-    max.innerHTML = parseInt(str.daily.data[key].temperatureMax) + "℃"
-    min.innerHTML = parseInt(str.daily.data[key].temperatureMin) + "℃"
+    max.innerHTML = Math.ceil(str.daily.data[key].temperatureMax) + "℃"
+    min.innerHTML = Math.ceil(str.daily.data[key].temperatureMin) + "℃"
     icon.innerHTML = iconMap[(str.daily.data[key].icon).split('-').join('')]
     if (+key === 0) {
       continue
