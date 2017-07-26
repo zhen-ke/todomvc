@@ -2637,13 +2637,12 @@ function debounce(fn, duration) {
 }
 
 // 异步获取用户ip，如果获取失败使用 html5 的方式获取
-jsonp("https://ipinfo.io/json/?callback=loc").catch(function() { getLocation() })
+jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
 
 // 通过用户 IP 获取用户地理位置
 function loc(str) {
-  let arrStr = str.loc.split(",")
-  let latitude = parseInt(arrStr[0])
-  let longitude = parseInt(arrStr[1])
+  let latitude = parseInt(str.latitude)
+  let longitude = parseInt(str.longitude)
   for (let key in data) {
     let temp = data[key].split(",")
     let latitudeTemp = parseInt(data[key].split(",")[0])
