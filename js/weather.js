@@ -1,6 +1,6 @@
-let search = document.querySelector('input')
 let weather = document.querySelector('.weather')
 let userLocation
+
 // 天气图标
 let iconMap = {
   clearday: "☀️",
@@ -15,13 +15,6 @@ let iconMap = {
   cloudy: "☁️",
   partlycloudyday: "⛅",
 }
-
-search.addEventListener('input', debounce(function() {
-  if (search.value.trim()) {
-    jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[search.value] + '?units=si&lang=zh' + '&callback=callback')
-  }
-  userLocation = search.value
-}, 500))
 
 function jsonp(url) {
   console.log('jsonp')
@@ -47,16 +40,6 @@ function callback(data) {
   let headp = document.querySelector('.head').querySelectorAll('p')
   headp[0].innerHTML = userLocation + " " + Math.ceil(data.currently.temperature) + "℃"
   headp[1].innerHTML = data.hourly.summary
-}
-
-function debounce(fn, duration) {
-  var timerId
-  return function(...args) {
-    clearTimeout(timerId)
-    timerId = setTimeout(function() {
-      fn(...args)
-    }, duration)
-  }
 }
 
 // 异步获取用户ip，如果获取失败使用 html5 的方式获取
@@ -155,3 +138,21 @@ function getDay(time) {
   let arr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   return arr[new Date(new Date(parseInt(time) * 1000).toLocaleString().split(" ")[0]).getDay()]
 }
+
+// let search = document.querySelector('input')
+// search.addEventListener('input', debounce(function() {
+//   if (search.value.trim()) {
+//     jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[search.value] + '?units=si&lang=zh' + '&callback=callback')
+//   }
+//   userLocation = search.value
+// }, 500))
+
+// function debounce(fn, duration) {
+//   var timerId
+//   return function(...args) {
+//     clearTimeout(timerId)
+//     timerId = setTimeout(function() {
+//       fn(...args)
+//     }, duration)
+//   }
+// }
