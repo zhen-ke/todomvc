@@ -1,88 +1,146 @@
-ul,
-li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 p {
   margin: 0;
 }
 
-.weather {
+dl,
+dd,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+  color: #4d4d4d;
+  font-weight: 300;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.weathertop {
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 100px;
   display: none;
 }
 
-.result .icon {
+.weathertop .icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
   margin: 0 5px;
+  x
 }
 
-.weather:hover .wrap {
-  display: block;
-}
-
-.wrap {
-  border: 1px solid #D1DFE9;
-  background-color: #fff;
-  width: 360px;
-  position: absolute;
-  top: 30px;
-  left: 0;
-  z-index: 1;
-  display: none;
-}
-
-.wrap .head {
-  padding: 10px 15px;
-}
-
-.wrap .head p {
-  margin-bottom: 5px;
-  font-size: 12px;
-}
-
-.wrap .head p:first-child {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-.wrap .head .summary {}
-
-.moreDaysWeather {
+.todayweather {
   overflow: hidden;
+  margin: 10px 0 30px;
 }
 
-.moreDaysWeather li {
+.todayweather .icon {
+  width: 56px;
+  margin-top: 10px;
+}
+
+.todayweather .icon,
+.weatherapp .whead .todayweather .currently,
+.weatherapp .whead .todayweather .summary {
   float: left;
-  border-top: 1px solid #D1DFE9;
-  border-left: 1px solid #D1DFE9;
-  margin-left: -1px;
-  padding: 10px 30px 5px;
+}
+
+.weathertop:hover .weatherapp {
+  opacity: 1;
+  visibility: visible;
+}
+
+.weatherapp {
+  position: absolute;
+  background: linear-gradient(#2869e9, #79bfff);
+  color: #fff;
+  border-radius: 5px;
+  width: 290px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, .15);
+  opacity: 0;
+  left: 0;
+  top: 35px;
+  visibility: hidden;
+  transition: visibility .2s ease, opacity .2s ease;
+  transition-delay: 0.5s;
+}
+
+.weatherapp .whead,
+.weatherapp .wbody {
+  padding: 15px;
+}
+
+.weatherapp .whead strong {
+  font-weight: normal;
+}
+
+.weatherapp .whead time {
+  font-size: 12px;
+  color: #A5C2F4;
+}
+
+.weatherapp .whead .todayweather .currently {
+  display: inline-block;
   text-align: center;
 }
 
-.moreDaysWeather li .icon {
-  font-size: 30px;
+.weatherapp .whead .todayweather .currently .temperature {
+  font-size: 50px;
+  line-height: 1;
 }
 
-.moreDaysWeather li p {
+.weatherapp .whead .todayweather .summary {
+  word-break: break-word;
+  display: inline-block;
+  width: 95px;
+}
+
+.weatherapp .whead .todayweather .summary li {
+  margin-bottom: 6px;
+}
+
+.weatherapp .wbody {
+  overflow: hidden;
+  text-align: center;
+  border-top: 1px solid #73A9F6;
+}
+
+.weatherapp .wbody .icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.weatherapp .wbody dl {
+  float: left;
+  width: 33.3333%;
+  border-left: 1px solid hsla(0, 0%, 100%, 0.2);
+  margin-left: -1px;
+}
+
+.weatherapp .wbody dl:first-child {
+  border-left: 0;
+}
+
+.weatherapp .wbody dl dt,
+.weatherapp .wbody dl dd {
+  margin-bottom: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 0 0 10px;
   font-size: 12px;
-  margin-bottom: 5px;
-}
-
-.moreDaysWeather p.temperature {
-  width: 60px;
-}
-
-.moreDaysWeather li p span.max,
-.moreDaysWeather li p span.min {
-  margin: 0 5px;
-}
-
-.moreDaysWeather li p span.max {
-  font-weight: bold;
+  color: hsla(0, 0%, 100%, .6);
 }

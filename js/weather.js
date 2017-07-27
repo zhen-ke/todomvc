@@ -1,20 +1,17 @@
-let weather = document.querySelector('.weather')
-let userLocation
-
-// 天气图标
-let iconMap = {
-  clearday: "☀️",
-  clearnight: "🌔",
-  fog: "🌫",
-  partlycloudyday: "🌓",
-  partlycloudynight: "🌓",
-  rain: "🌧",
-  sleet: "🌨",
-  snow: "❄",
-  wind: "🌪",
-  cloudy: "☁️",
-  partlycloudyday: "⛅",
-}
+let weathertop = document.querySelector('.weathertop')
+let weathertopCity = weathertop.querySelector('.city')
+let weathertopIcon = weathertop.querySelector('.icon').querySelector('img')
+let weathertopTemperature = weathertop.querySelector('.temperature')
+let weatherapp = document.querySelector('.weatherapp')
+let userLocation = weatherapp.querySelector('.city')
+let weatherUpdateTime = weatherapp.querySelector('time')
+let todayWeather = weatherapp.querySelector('.todayweather')
+let todayWeatherIcon = todayWeather.querySelector('.icon').querySelector('img')
+let todayWeatherCurrently = todayWeather.querySelector('.temperature')
+let todayWeatherSummary = todayWeather.querySelector('.summary')
+let todayWeatherdewPoint = todayWeather.querySelector('.dewPoint')
+let todayWeatherPrecipProbability = todayWeather.querySelector('.precipProbability')
+let todayWeatherWindSpeed = todayWeather.querySelector('.windSpeed')
 
 function jsonp(url) {
   console.log('jsonp')
@@ -32,14 +29,15 @@ function jsonp(url) {
 }
 
 function callback(data) {
-  let resultspan = document.querySelector('.result').querySelectorAll('span')
-  resultspan[0].innerHTML = userLocation
-  resultspan[1].innerHTML = iconMap[(data.currently.icon).split('-').join("")]
-  resultspan[2].innerHTML = Math.ceil(data.currently.temperature) + "℃"
+  weatherUpdateTime.innerHTML = getTime(data.currently.time).replace(/[^0-9]*/, "") + "发布"
+  weathertopIcon.src = todayWeatherIcon.src = iconMap[(data.currently.icon).split('-').join("")]
+  weathertopTemperature.innerHTML = todayWeatherCurrently.innerHTML = Math.ceil(data.currently.temperature) + "˚"
+  todayWeatherSummary.innerHTML = data.currently.summary
+
+  todayWeatherdewPoint.innerHTML = parseInt(data.currently.dewPoint) + "%"
+  todayWeatherPrecipProbability.innerHTML = parseInt(data.currently.precipProbability) + "%"
+  todayWeatherWindSpeed.innerHTML = data.currently.windSpeed
   moreDays(data)
-  let headp = document.querySelector('.head').querySelectorAll('p')
-  headp[0].innerHTML = userLocation + " " + Math.ceil(data.currently.temperature) + "℃"
-  headp[1].innerHTML = data.hourly.summary
 }
 
 // 异步获取用户ip，如果获取失败使用 html5 的方式获取
@@ -47,7 +45,9 @@ function callback(data) {
 //   jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
 // }, 0)
 
-jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
+jsonp("https://freegeoip.net/json/?callback=loc").catch(function() {
+  getLocation()
+})
 
 // 通过用户 IP 获取用户地理位置
 function loc(str) {
@@ -59,9 +59,9 @@ function loc(str) {
     let longitudeTemp = parseInt(data[key].split(",")[1])
     if (latitudeTemp === latitude && longitudeTemp === longitude) {
       jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[key] + '?units=si&lang=zh' + '&callback=callback').then(function() {
-        weather.style.display = 'block'
+        weathertop.style.display = 'block'
       })
-      userLocation = key
+      userLocation.innerHTML = weathertopCity.innerHTML = key
       break;
     }
   }
@@ -88,9 +88,9 @@ function onSuccess(position) {
     let longitudeTemp = parseInt(data[key].split(",")[1])
     if (latitudeTemp === latitude && longitudeTemp === longitude) {
       jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[key] + '?units=si&lang=zh' + '&callback=callback').then(function() {
-        weather.style.display = 'block'
+        weathertop.style.display = 'block'
       })
-      userLocation = key
+      userLocation.innerHTML = weathertopCity.innerHTML = key
       break;
     }
   }
@@ -113,30 +113,40 @@ function onError(error) {
       break;
   }
 }
+
 // 未来天气
 function moreDays(str) {
-  let moreDaysWeather = document.querySelector('.moreDaysWeather').querySelectorAll('li')
-  for (let key in moreDaysWeather) {
+  let weatherWbody = weatherapp.querySelector('.wbody')
+  let weatherWbodyDl = weatherapp.querySelectorAll('dl')
+  for (let key in weatherWbodyDl) {
     if (key === 'length') break
-    let day = moreDaysWeather[key].querySelector('.days');
-    let max = moreDaysWeather[key].querySelector('.max');
-    let min = moreDaysWeather[key].querySelector('.min');
-    let icon = moreDaysWeather[key].querySelector('.icon');
-    max.innerHTML = Math.ceil(str.daily.data[key].temperatureMax) + "℃"
-    min.innerHTML = Math.ceil(str.daily.data[key].temperatureMin) + "℃"
-    icon.innerHTML = iconMap[(str.daily.data[key].icon).split('-').join('')]
+    let weatherWbodyWeek = weatherWbodyDl[key].querySelector('dt')
+    let weatherWbodyIcon = weatherWbodyDl[key].querySelector('.icon').querySelector('img')
+    let weatherWbodySummary = weatherWbodyDl[key].querySelector('.summary')
+    let weatherWbodyTemperatureMin = weatherWbodyDl[key].querySelector('.temperaturemin')
+    let weatherWbodyTemperatureMax = weatherWbodyDl[key].querySelector('.temperaturemax')
+
+    weatherWbodyIcon.src = iconMap[(str.daily.data[key].icon).split('-').join('')]
+    weatherWbodyTemperatureMin.innerHTML = Math.ceil(str.daily.data[key].temperatureMin) + "˚"
+    weatherWbodyTemperatureMax.innerHTML = Math.ceil(str.daily.data[key].temperatureMax) + "˚"
+    // weatherWbodySummary.innerHTML = str.daily.data[key].summary
     if (+key === 0) {
       continue
     } else {
-      day.innerHTML = getDay(str.daily.data[key].time)
+      weatherWbodyWeek.innerHTML = getDay(str.daily.data[key].time)
     }
   }
 }
 
-// 处理时间
+// 秒转星期
 function getDay(time) {
   let arr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   return arr[new Date(new Date(parseInt(time) * 1000).toLocaleString().split(" ")[0]).getDay()]
+}
+
+// 秒转时间
+function getTime(time) {
+  return new Date(parseInt(time) * 1000).toLocaleString().split(" ")[1]
 }
 
 // let search = document.querySelector('input')
