@@ -20,7 +20,8 @@ let errorMap = {
   "1": "位置服务被拒绝",
   "2": "暂时获取不到位置信息",
   "3": "获取信息超时",
-  "4": "未知错误"
+  "4": "未知错误",
+  "5": "您的浏览器不支持地理位置定位"
 }
 
 // 通过 JSONP 请求数据
@@ -80,7 +81,7 @@ function getLocation() {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(onSuccess, onError); // 地理位置服务可用
   } else {
-    console.log('您的浏览器不支持地理位置定位'); // 地理位置服务不可用
+    werror(5) // 地理位置服务不可用
   }
 }
 
@@ -88,29 +89,28 @@ function getLocation() {
 function onError(error) {
   switch (error.code) {
     case 1:
-      weatherError.innerHTML = errorMap[error.code]
-      werror()
+      werror(error.code)
       break;
     case 2:
-      weatherError.innerHTML = errorMap[error.code]
-      werror()
+      werror(error.code)
       break;
     case 3:
-      weatherError.innerHTML = errorMap[error.code]
-      werror()
+      werror(error.code)
       break;
     case 4:
-      weatherError.innerHTML = errorMap[error.code]
-      werror()
+      werror(error.code)
       break;
   }
 }
 
 // 天气错误提示
-function werror() {
-  weatherError.classList.add('erroroff')
+function werror(err) {
+  let weatherError = document.createElement('p')
+  weatherError.innerHTML = errorMap[err]
+  weatherError.setAttribute('class', 'error')
+  document.body.appendChild(weatherError)
   setTimeout(function() {
-    weatherError.classList.remove('erroroff')
+    document.body.removeChild(weatherError)
   }, 2000)
 }
 
