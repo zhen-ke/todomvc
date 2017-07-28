@@ -53,7 +53,7 @@ function refreshWeather(data) {
   weathertopTemperature.innerHTML = todayWeatherCurrently.innerHTML = Math.ceil(data.currently.temperature) + "˚"
   todayWeatherSummary.innerHTML = data.currently.summary
   todayWeatherdewPoint.innerHTML = parseInt(data.currently.dewPoint) + "%"
-  todayWeatherPrecipProbability.innerHTML = (data.currently.precipProbability * 100) + "%"
+  todayWeatherPrecipProbability.innerHTML = parseInt(data.currently.precipProbability * 100) + "%"
   todayWeatheruvIndex.innerHTML = data.currently.uvIndex
 }
 
@@ -143,7 +143,7 @@ function moreDays(str) {
     let weatherWbodyTemperatureMin = weatherWbodyDl[key].querySelector('.temperaturemin')
     let weatherWbodyTemperatureMax = weatherWbodyDl[key].querySelector('.temperaturemax')
     let weatherPrecipProbability = weatherWbodyDl[key].querySelector('.summary')
-    weatherPrecipProbability.innerHTML = (str.daily.data[key].precipProbability * 100) + "%"
+    weatherPrecipProbability.innerHTML = parseInt(str.daily.data[key].precipProbability * 100) + "%"
     weatherWbodyIcon.src = iconMap[(str.daily.data[key].icon).split('-').join('')]
     weatherWbodyTemperatureMin.innerHTML = Math.ceil(str.daily.data[key].temperatureMin) + "˚"
     weatherWbodyTemperatureMax.innerHTML = Math.ceil(str.daily.data[key].temperatureMax) + "˚"
