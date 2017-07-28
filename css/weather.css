@@ -70,10 +70,10 @@ img {
   border-radius: 5px;
   width: 290px;
   box-shadow: 0 2px 20px rgba(0, 0, 0, .15);
-  opacity: 0;
+  /*opacity: 0;*/
   left: 0;
   top: 35px;
-  visibility: hidden;
+  /*visibility: hidden;*/
   transition: visibility .2s ease, opacity .2s ease;
   transition-delay: 0.5s;
 }
@@ -95,6 +95,11 @@ img {
 .weatherapp .whead .todayweather .currently {
   display: inline-block;
   text-align: center;
+}
+
+.weatherapp .whead .todayweather .currently p {
+  margin-top: -3px;
+  margin-bottom: 3px;
 }
 
 .weatherapp .whead .todayweather .currently .temperature {

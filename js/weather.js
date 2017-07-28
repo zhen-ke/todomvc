@@ -12,6 +12,7 @@ let todayWeatherSummary = todayWeather.querySelector('.summary')
 let todayWeatherdewPoint = todayWeather.querySelector('.dewPoint')
 let todayWeatherPrecipProbability = todayWeather.querySelector('.precipProbability')
 let todayWeatherWindSpeed = todayWeather.querySelector('.windSpeed')
+let todayWeatheruvIndex = todayWeather.querySelector('.uvIndex')
 
 function jsonp(url) {
   console.log('jsonp')
@@ -29,14 +30,14 @@ function jsonp(url) {
 }
 
 function callback(data) {
-  weatherUpdateTime.innerHTML = getTime(data.currently.time).replace(/[^0-9]*/, "") + "发布"
+  weatherUpdateTime.innerHTML = getTime(data.currently.time).replace(/[^0-9]*/, "") + " Update"
   weathertopIcon.src = todayWeatherIcon.src = iconMap[(data.currently.icon).split('-').join("")]
   weathertopTemperature.innerHTML = todayWeatherCurrently.innerHTML = Math.ceil(data.currently.temperature) + "˚"
   todayWeatherSummary.innerHTML = data.currently.summary
 
   todayWeatherdewPoint.innerHTML = parseInt(data.currently.dewPoint) + "%"
   todayWeatherPrecipProbability.innerHTML = parseInt(data.currently.precipProbability) + "%"
-  todayWeatherWindSpeed.innerHTML = data.currently.windSpeed
+  todayWeatheruvIndex.innerHTML = data.currently.uvIndex
   moreDays(data)
 }
 
