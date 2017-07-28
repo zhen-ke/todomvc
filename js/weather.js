@@ -13,8 +13,19 @@ let todayWeatherdewPoint = todayWeather.querySelector('.dewPoint')
 let todayWeatherPrecipProbability = todayWeather.querySelector('.precipProbability')
 let todayWeatherWindSpeed = todayWeather.querySelector('.windSpeed')
 let todayWeatheruvIndex = todayWeather.querySelector('.uvIndex')
+let weatherError = document.querySelector('.error')
 
+// 天气错误代码
+let errorMap = {
+  "1": "位置服务被拒绝",
+  "2": "暂时获取不到位置信息",
+  "3": "获取信息超时",
+  "4": "未知错误"
+}
+
+// 通过 JSONP 请求数据
 function jsonp(url) {
+  // debugger
   console.log('jsonp')
   return new Promise(function(resolve, reject) {
     var script = document.createElement('script');
@@ -29,29 +40,81 @@ function jsonp(url) {
   })
 }
 
+// 处理 JSONP 请求数据的回调
 function callback(data) {
+  refreshWeather(data)
+  moreDays(data)
+}
+
+// 刷新天气
+function refreshWeather(data) {
   weatherUpdateTime.innerHTML = getTime(data.currently.time).replace(/[^0-9]*/, "") + " Update"
   weathertopIcon.src = todayWeatherIcon.src = iconMap[(data.currently.icon).split('-').join("")]
   weathertopTemperature.innerHTML = todayWeatherCurrently.innerHTML = Math.ceil(data.currently.temperature) + "˚"
   todayWeatherSummary.innerHTML = data.currently.summary
-
   todayWeatherdewPoint.innerHTML = parseInt(data.currently.dewPoint) + "%"
   todayWeatherPrecipProbability.innerHTML = parseInt(data.currently.precipProbability) + "%"
   todayWeatheruvIndex.innerHTML = data.currently.uvIndex
-  moreDays(data)
 }
 
-// 异步获取用户ip，如果获取失败使用 html5 的方式获取
-// setTimeout(function() {
-//   jsonp("https://freegeoip.net/json/?callback=loc").catch(function() { getLocation() })
-// }, 0)
-
+// 使用 IP 请求用户地理位置
+// 如果失败则通过 navigator.geolocation 获取用户地理位置
 jsonp("https://freegeoip.net/json/?callback=loc").catch(function() {
   getLocation()
 })
 
-// 通过用户 IP 获取用户地理位置
+
+// 如果获取到 IP ，则开始生成天气
 function loc(str) {
+  getWeather(str)
+}
+
+// 如果获取到经纬度，则开始生成天气
+function onSuccess(position) {
+  getWeather(position.coords)
+}
+
+// 通过 navigator.geolocation 获取用户地理位置
+function getLocation() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError); // 地理位置服务可用
+  } else {
+    console.log('您的浏览器不支持地理位置定位'); // 地理位置服务不可用
+  }
+}
+
+// 处理用户地理位置错误时状态
+function onError(error) {
+  switch (error.code) {
+    case 1:
+      weatherError.innerHTML = errorMap[error.code]
+      werror()
+      break;
+    case 2:
+      weatherError.innerHTML = errorMap[error.code]
+      werror()
+      break;
+    case 3:
+      weatherError.innerHTML = errorMap[error.code]
+      werror()
+      break;
+    case 4:
+      weatherError.innerHTML = errorMap[error.code]
+      werror()
+      break;
+  }
+}
+
+// 天气错误提示
+function werror() {
+  weatherError.classList.add('erroroff')
+  setTimeout(function() {
+    weatherError.classList.remove('erroroff')
+  }, 2000)
+}
+
+// 请求用户天气数据
+function getWeather(str) {
   let latitude = parseInt(str.latitude)
   let longitude = parseInt(str.longitude)
   for (let key in data) {
@@ -68,54 +131,7 @@ function loc(str) {
   }
 }
 
-// 通过 HTML5 API 获取用户地理位置
-function getLocation() {
-  if ("geolocation" in navigator) {
-    /* 地理位置服务可用 */
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  } else {
-    /* 地理位置服务不可用 */
-    console.log('您的浏览器不支持地理位置定位');
-  }
-}
-
-//处理用户地理位置
-function onSuccess(position) {
-  let latitude = parseInt(position.coords.latitude)
-  let longitude = parseInt(position.coords.longitude)
-  for (let key in data) {
-    let temp = data[key].split(",")
-    let latitudeTemp = parseInt(data[key].split(",")[0])
-    let longitudeTemp = parseInt(data[key].split(",")[1])
-    if (latitudeTemp === latitude && longitudeTemp === longitude) {
-      jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[key] + '?units=si&lang=zh' + '&callback=callback').then(function() {
-        weathertop.style.display = 'block'
-      })
-      userLocation.innerHTML = weathertopCity.innerHTML = key
-      break;
-    }
-  }
-}
-
-//处理用户地理位置错误时状态
-function onError(error) {
-  switch (error.code) {
-    case 1:
-      alert("位置服务被拒绝");
-      break;
-    case 2:
-      alert("暂时获取不到位置信息");
-      break;
-    case 3:
-      alert("获取信息超时");
-      break;
-    case 4:
-      alert("未知错误");
-      break;
-  }
-}
-
-// 未来天气
+// 刷新未来天气
 function moreDays(str) {
   let weatherWbody = weatherapp.querySelector('.wbody')
   let weatherWbodyDl = weatherapp.querySelectorAll('dl')
