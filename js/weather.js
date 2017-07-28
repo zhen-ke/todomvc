@@ -25,14 +25,12 @@ let errorMap = {
 
 // 通过 JSONP 请求数据
 function jsonp(url) {
-  // debugger
-  console.log('jsonp')
+  var script = document.createElement('script');
+  script.setAttribute('src', url);
+  document.body.appendChild(script);
   return new Promise(function(resolve, reject) {
-    var script = document.createElement('script');
-    script.setAttribute('src', url);
-    document.body.appendChild(script);
     script.onload = function() {
-      resolve()
+      resolve(script)
     }
     script.onerror = function() {
       reject()
@@ -59,9 +57,12 @@ function refreshWeather(data) {
 
 // 使用 IP 请求用户地理位置
 // 如果失败则通过 navigator.geolocation 获取用户地理位置
-jsonp("https://freegeoip.net/json/?callback=loc").catch(function() {
+jsonp("https://freegeoip.net/json/?callback=loc").then(function(script) {
+  document.body.removeChild(script)
+}).catch(function() {
   getLocation()
 })
+
 
 
 // 如果获取到 IP ，则开始生成天气
@@ -122,8 +123,9 @@ function getWeather(str) {
     let latitudeTemp = parseInt(data[key].split(",")[0])
     let longitudeTemp = parseInt(data[key].split(",")[1])
     if (latitudeTemp === latitude && longitudeTemp === longitude) {
-      jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[key] + '?units=si&lang=zh' + '&callback=callback').then(function() {
+      jsonp('https://api.darksky.net/forecast/b534fc093637c2e5fccdbe93f777fcda/' + data[key] + '?units=si&lang=zh' + '&callback=callback').then(function(script) {
         weathertop.style.display = 'block'
+        document.body.removeChild(script)
       })
       userLocation.innerHTML = weathertopCity.innerHTML = key
       break;
