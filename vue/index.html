@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/weather.css">
   <link rel="stylesheet" href="css/todoapp.css">
 </head>
+
 <body>
   <div class="weathertop">
     <section>
@@ -71,7 +72,7 @@
       </footer>
     </section>
   </div>
-  <div class="todomvc-wrapper" id="app" v-cloak>
+  <div class="todomvc-wrapper" id="app">
     <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
@@ -80,7 +81,7 @@
       <section class="main">
         <input type="checkbox" class="toggle-all" name="toggle-all" @click="toggleall" :checked="tooglestatus">
         <label for="toggle-all">Mark all as complete</label>
-        <ul class="todo-list">
+        <ul class="todo-list" v-cloak>
           <li v-for="(item, index) in showingItems" :class="{active: !item.checked, completed: item.checked}">
             <div @dblclick="edits(index, $event)" v-show="editing != index" class="view">
               <input class="toggle" type="checkbox" @click="status(index)" v-model.checked="item.checked">
@@ -89,14 +90,13 @@
             </div>
             <!-- <input @blur="edittext(index, $event)" @keyup.enter="edittext(index, $event)" @keyup.esc="cancelText(index,$event)" v-show="editing == index" :value="item.title" class="edit" name="title"> -->
             <!-- v-model.lazy="item.title" 也可以实现在用户按Esc键后撤消用户输入内容 -->
-            <input @blur="edittext(index)" @keyup.enter="edittext(index)" @keyup.esc="edittext(index)" v-show="editing == index" v-model.trim.lazy="item.title" class="edit" name="title">
-      </li>
+            <input @blur="edittext(index)" @keyup.enter="edittext(index)" @keyup.esc="edittext(index)" v-show="editing == index" v-model.trim.lazy="item.title" class="edit" name="title" v-cloak>
+          </li>
         </ul>
       </section>
-      <footer class="footer" v-show="showbar">
+      <footer class="footer" v-show="showbar" v-cloak>
         <span class="todo-count">
-          <span>{{ allCount }}</span>
-          item left
+          <span>{{ allCount }}</span> item left
         </span>
         <ul>
           <li :class="{selected: showing=='all'}">
@@ -123,4 +123,5 @@
 <script type="text/javascript" src="js/todoapp.js"></script>
 <script type="text/javascript" src="js/data.js"></script>
 <script type="text/javascript" src="js/weather.js"></script>
+
 </html>
