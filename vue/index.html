@@ -85,7 +85,7 @@
             <div @dblclick="edits(index, $event)" v-show="editing != index" class="view">
               <input class="toggle" type="checkbox" @click="status(index)" v-model.checked="item.checked">
               <label>{{ item.title }}</label>
-              <button class="destroy" @click="destroy(index)"></button>
+              <button class="destroy" @click="destroy(index)" @dblclick.stop=""></button>
             </div>
             <!-- <input @blur="edittext(index, $event)" @keyup.enter="edittext(index, $event)" @keyup.esc="cancelText(index,$event)" v-show="editing == index" :value="item.title" class="edit" name="title"> -->
             <!-- v-model.lazy="item.title" 也可以实现在用户按Esc键后撤消用户输入内容 -->
