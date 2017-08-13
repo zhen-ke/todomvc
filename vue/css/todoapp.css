@@ -27,6 +27,10 @@ body {
   font-weight: 300;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .todomvc-wrapper {
   width: 550px;
   margin: 0 auto;
