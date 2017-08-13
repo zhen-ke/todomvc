@@ -1,0 +1,359 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+input:focus,
+textarea:focus {
+  outline: 0 none;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;
+  background-color: #f5f5f5;
+  color: #4d4d4d;
+  font-weight: 300;
+}
+
+.todomvc-wrapper {
+  width: 550px;
+  margin: 0 auto;
+  counter-reset: active;
+}
+
+.todoapp {
+  position: relative;
+  margin-top: 130px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  counter-reset: completed;
+}
+
+.todoapp#show-active .completed {
+  display: none;
+}
+
+.todoapp#show-completed .active {
+  display: none;
+}
+
+.todoapp .header h1 {
+  font-size: 100px;
+  line-height: 1;
+  color: rgba(175, 47, 47, 0.15);
+  font-weight: 100;
+  margin: 0;
+  position: absolute;
+  top: -110px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.todoapp .header .new-todo {
+  border: 0;
+  padding: 16px 16px 16px 60px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 24px;
+  background-color: #fff;
+  box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+  color: #4d4d4d;
+  font-weight: 300;
+}
+
+.todoapp .header input::-webkit-input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #e6e6e6;
+}
+
+.todoapp .header input::-moz-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #e6e6e6;
+}
+
+.todoapp .header input::input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+  color: #e6e6e6;
+}
+
+.main {
+  position: relative;
+}
+
+.main .toggle-all {
+  position: absolute;
+  top: -45px;
+  left: 20px;
+  transform: rotate(90deg);
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.main .toggle-all:checked:after {
+  color: #737373;
+}
+
+.main .toggle-all:after {
+  content: '❯';
+  color: #E6E6E6;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.main label[for='toggle-all'] {
+  display: none;
+}
+
+.main .todo-list li:first-child {
+  border-top: 1px solid #e6e6e6;
+}
+
+.main .todo-list li:last-child {
+  border-bottom: none;
+}
+
+.main .todo-list li {
+  border-bottom: 1px solid #EDEDED;
+  font-size: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.main .todo-list li .view {
+  position: relative;
+}
+
+.main .todo-list li .edit {
+  display: none;
+  border: 1px solid #999;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 44px;
+  width: calc(100% - 45px);
+  box-sizing: border-box;
+  font-size: 24px;
+  box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+  padding: 0px 15px;
+  color: #4d4d4d;
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;
+}
+
+.main .todo-list li.editing .edit {
+  display: block;
+}
+
+.main .todo-list li.editing .toggle {
+  display: none;
+}
+
+.main .todo-list li.editing .view label {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.main .todo-list li.completed label {
+  text-decoration: line-through;
+  color: #d9d9d9;
+}
+
+.main .todo-list li .view label {
+  word-break: break-all;
+  padding: 15px 60px 15px 15px;
+  display: block;
+  margin-left: 45px;
+  transition: color 0.4s;
+}
+
+.main .todo-list li .view .toggle,
+.main .todo-list li .view .destroy {
+  position: absolute;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.main .todo-list li .view .toggle {
+  left: 10px;
+  top: 50%;
+  margin-top: -15px;
+}
+
+.main .todo-list li .view .destroy {
+  bottom: 25px;
+  right: 25px;
+}
+
+.main .todo-list li .view .toggle:before {
+  content: '';
+  cursor: pointer;
+  border: 1px solid #EFEFEF;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+}
+
+.main .todo-list li .view .toggle:after {
+  content: '';
+  display: block;
+  width: 15px;
+  height: 7px;
+  border: 0px solid #69C6B5;
+  border-top: none;
+  border-right: none;
+  -moz-transform: rotate(-55deg);
+  -ms-transform: rotate(-5deg);
+  -webkit-transform: rotate(-55deg);
+  transform: rotate(-55deg);
+  position: absolute;
+  font-size: 0px;
+  cursor: pointer;
+  top: 9px;
+  left: 7px;
+}
+
+.main .todo-list li .view .toggle:checked:after {
+  border-width: 2px;
+  cursor: pointer;
+}
+
+.main .todo-list li:hover .view .destroy::after {
+  content: "✕";
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 20px;
+  color: #CC9A9A;
+  margin-top: -11px;
+  cursor: pointer;
+}
+
+.main .todo-list li.active {
+  counter-increment: active;
+}
+
+.main .todo-list li.completed {
+  counter-increment: completed;
+}
+
+.footer .todo-count::before {
+  content: counter(active);
+}
+
+.footer .clear-completed::after {
+  content: counter(completed);
+}
+
+.footer {
+  text-align: center;
+  color: #777;
+  padding: 10px 15px;
+  height: 20px;
+  text-align: center;
+  border-top: 1px solid #e6e6e6;
+}
+
+.footer {
+  position: relative;
+  display: none;
+}
+
+.footer .todo-count {
+  float: left;
+}
+
+.footer .todo-count strong {
+  font-weight: 300;
+}
+
+.footer ul {
+  position: absolute;
+  left: 50%;
+  margin-left: -95px;
+}
+
+.footer ul li {
+  display: inline-block;
+}
+
+.footer ul li {
+  margin: -2px 3px;
+}
+
+.footer ul li a {
+  color: #777;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 2px 7px;
+  display: inline-block;
+}
+
+.footer ul li a:hover {
+  border-color: #F8EDED;
+}
+
+.footer ul li.selected a {
+  border-color: #EFD5D5;
+}
+
+.footer .clear-completed {
+  float: right;
+  border: 0;
+  outline: none;
+  color: #777;
+  font-weight: 300;
+  cursor: pointer;
+  background-color: transparent;
+  display: none;
+  position: relative;
+}
+
+.footer .clear-completed:hover {
+  text-decoration: underline;
+}
+
+.footer:before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  height: 50px;
+  overflow: hidden;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2)
+}
+
+.ft {
+  color: #bfbfbf;
+  text-align: center;
+  font-size: 10px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  margin-top: 65px;
+}
+
+.ft p {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
