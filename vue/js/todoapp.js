@@ -7,10 +7,11 @@ var app = new Vue({
     editing: -1,
   },
   created: function() {
-    try {
+    if(localStorage.todo === undefined) {
+      this.list = []
+      console.log('localStorage 里没有数据')
+    }else {
       this.list = JSON.parse(localStorage.todo)
-    } catch(e) {
-      console.log(e)
     }
   },
   methods: {

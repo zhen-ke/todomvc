@@ -75,7 +75,7 @@
     <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
-        <input @keyup.enter="newtodo" v-model="val" type="text" class="new-todo" placeholder="What needs to be done?">
+        <input @keyup.enter="newtodo" v-model.trim="val" type="text" class="new-todo" placeholder="What needs to be done?">
       </header>
       <section class="main">
         <input type="checkbox" class="toggle-all" name="toggle-all" @click="toggleall" :checked="tooglestatus">
@@ -89,7 +89,7 @@
             </div>
             <!-- <input @blur="edittext(index, $event)" @keyup.enter="edittext(index, $event)" @keyup.esc="cancelText(index,$event)" v-show="editing == index" :value="item.title" class="edit" name="title"> -->
             <!-- v-model.lazy="item.title" 也可以实现在用户按Esc键后撤消用户输入内容 -->
-            <input @blur="edittext(index)" @keyup.enter="edittext(index)" @keyup.esc="edittext(index)" v-show="editing == index" v-model.lazy="item.title" class="edit" name="title">
+            <input @blur="edittext(index)" @keyup.enter="edittext(index)" @keyup.esc="edittext(index)" v-show="editing == index" v-model.trim.lazy="item.title" class="edit" name="title">
       </li>
         </ul>
       </section>
