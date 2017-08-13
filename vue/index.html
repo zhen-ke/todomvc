@@ -100,13 +100,13 @@
         </span>
         <ul>
           <li :class="{selected: showing=='all'}">
-            <a class="show-all" @click="changeShowing('all')">All</a>
+            <a href="javascript:;" class="show-all" @click="changeShowing('all')">All</a>
           </li>
           <li :class="{selected: showing=='active'}">
-            <a class="show-active" @click="changeShowing('active')">Active</a>
+            <a href="javascript:;" class="show-active" @click="changeShowing('active')">Active</a>
           </li>
           <li :class="{selected: showing=='done'}">
-            <a class="show-completed" @click="changeShowing('done')">Completed</a>
+            <a href="javascript:;" class="show-completed" @click="changeShowing('done')">Completed</a>
           </li>
         </ul>
         <button class="clear-completed" v-show="showcompleted" @click="clearcompleted">Clear completed <span>{{ completedCount }}</span></button>

@@ -72,6 +72,7 @@ body {
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
   color: #4d4d4d;
   font-weight: 300;
+  height: 60px;
 }
 
 .todoapp .header input::-webkit-input-placeholder {
@@ -158,6 +159,7 @@ body {
   margin-left: 44px;
   color: #4d4d4d;
   font-weight: 300;
+  height: 63px;
   font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", sans-serif;
 }
 
