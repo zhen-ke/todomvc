@@ -1,19 +1,19 @@
 var app = new Vue({
   el: '#app',
   data: {
-    list: [],
+    list: JSON.parse(localStorage.todo || '[]'),
     val: "",
     showing: 'all',
     editing: -1,
   },
-  created: function() {
-    if(localStorage.todo === undefined) {
-      this.list = []
-      console.log('localStorage 里没有数据')
-    }else {
-      this.list = JSON.parse(localStorage.todo)
-    }
-  },
+  // created: function() {
+  //   if(localStorage.todo === undefined) {
+  //     this.list = []
+  //     console.log('localStorage 里没有数据')
+  //   }else {
+  //     this.list = JSON.parse(localStorage.todo)
+  //   }
+  // },
   methods: {
     destroy: function(index) { // 删除条目
       this.list.splice(index,1)
@@ -31,7 +31,10 @@ var app = new Vue({
         this.list[index].checked = false
       }
     },
-    toggleall: function() { // 全选与反选条目
+    toggleall: function(e) { // 全选与反选条目
+      if(this.list.length === 0) {
+        e.preventDefault()
+      }
       let check = this.list.every(it => it.checked)
       if(check) {
         this.list.forEach(it => it.checked = false)

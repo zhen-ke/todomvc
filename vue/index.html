@@ -79,7 +79,7 @@
         <input @keyup.enter="newtodo" v-model.trim="val" type="text" class="new-todo" placeholder="What needs to be done?">
       </header>
       <section class="main">
-        <input type="checkbox" class="toggle-all" name="toggle-all" @click="toggleall" :checked="tooglestatus">
+        <input type="checkbox" class="toggle-all" name="toggle-all" @click="toggleall($event)" :checked="tooglestatus">
         <label for="toggle-all">Mark all as complete</label>
         <ul class="todo-list" v-cloak>
           <li v-for="(item, index) in showingItems" :class="{active: !item.checked, completed: item.checked}">
